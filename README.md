@@ -131,8 +131,8 @@ POST   /orders
 PUT    /orders/{id}
 DELETE /orders/{id}
 ```
----
-## 🌐 API Gateway Route Mappings
+
+### 🌐 API Gateway Route Mappings
 
 The API Gateway routes incoming requests to the appropriate services. Below are the route mappings:
 
@@ -142,6 +142,7 @@ The API Gateway routes incoming requests to the appropriate services. Below are 
 | `GET /orders/{id}`          | `GET https://localhost:5002/api/orders/{id}`|
 | `POST /orders`              | `POST https://localhost:5002/api/orders`   |
 | `PUT /products/{id}`        | `PUT https://localhost:5001/api/products/{id}`|
+
 ---
 ## ✅ Running the Project
 1. Make sure RabbitMQ is running locally (localhost:5672).
