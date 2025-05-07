@@ -1,7 +1,7 @@
 using MassTransit;
 using Microsoft.EntityFrameworkCore;
 using ProductService.Data;
-using ProductService.Events;
+using ProductService.Consumers;
 
 var builder = WebApplication.CreateBuilder(args);
 

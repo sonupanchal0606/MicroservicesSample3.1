@@ -4,7 +4,7 @@ using OrderService.Data;
 using OrderService.Models;
 using Shared.Messages;
 
-// RabbitMQ consumer: On receiving a ProductCreated or ProductUpdated event, insert or update the local product record:
+// RabbitMQ consumer: On receiving a ProductCreated event, insert the local product record:
 namespace OrderService.Consumers
 {
 	public class ProductCreatedConsumer : IConsumer<ProductCreated> // Subscribes to ProductCreated messages.
@@ -20,26 +20,17 @@ namespace OrderService.Consumers
 		{
 			var message = context.Message;
 
-			var existingProduct = await _dbContext.Products
-				.FirstOrDefaultAsync(p => p.Id == message.ProductId);
+			var existing = await _dbContext.Products.FindAsync(message.ProductId);
+			if (existing != null) return;
 
-			if (existingProduct == null)
+			var product = new ProductReadModel
 			{
-				_dbContext.Products.Add(new Product
-				{
-					Id = message.ProductId,
-					Name = message.Name,
-					Quantity = message.Quantity,
-					Price = message.Price
-				});
-			}
-			else
-			{
-				existingProduct.Name = message.Name;
-				existingProduct.Price = message.Price;
-				existingProduct.Quantity = message.Quantity;
-			}
-
+				Id = message.ProductId,
+				Name = message.Name,
+				Quantity = message.Quantity,
+				Price = message.Price
+			};
+			await _dbContext.AddRangeAsync(product);
 			await _dbContext.SaveChangesAsync();
 		}
 	}

@@ -80,7 +80,7 @@ namespace OrderService.Controllers
 		{
 			var product = await _context.Products.FirstOrDefaultAsync(p => p.Id == orderRequest.ProductId);
 			if (product == null || product.Quantity < orderRequest.Quantity)
-				return BadRequest("Product not available or insufficient quantity.");
+				return BadRequest("ProductReadModel not available or insufficient quantity.");
 
 			var order = new Order
 			{
@@ -116,7 +116,7 @@ namespace OrderService.Controllers
 
 			var product = await _context.Products.FirstOrDefaultAsync(p => p.Id == updatedOrder.ProductId);
 			if (product == null)
-				return BadRequest("Product not found");
+				return BadRequest("ProductReadModel not found");
 
 			int quantityDiff = updatedOrder.Quantity - existingOrder.Quantity;
 			if (product.Quantity < quantityDiff)
@@ -141,6 +141,7 @@ namespace OrderService.Controllers
 			return Ok(existingOrder);
 		}
 
+		// Publish This Event on Failure or Order Cancellation
 		[HttpDelete("{id}")]
 		public async Task<IActionResult> DeleteOrder(Guid id)
 		{

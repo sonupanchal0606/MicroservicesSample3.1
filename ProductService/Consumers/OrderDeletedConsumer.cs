@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using ProductService.Data;
 using Shared.Messages;
 
-namespace ProductService.Events
+namespace ProductService.Consumers
 {
 	public class OrderDeletedConsumer : IConsumer<OrderDeleted>
 	{

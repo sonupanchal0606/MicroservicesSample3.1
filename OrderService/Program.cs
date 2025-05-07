@@ -14,6 +14,8 @@ builder.Services.AddDbContext<OrderDbContext>(options =>
 builder.Services.AddMassTransit(x =>
 {
 	x.AddConsumer<ProductCreatedConsumer>();
+	x.AddConsumer<ProductUpdatedConsumer>();
+	x.AddConsumer<ProductDeletedConsumer>();
 
 	x.UsingRabbitMq((context, cfg) =>
 	{
@@ -27,6 +29,12 @@ builder.Services.AddMassTransit(x =>
 		{
 			e.ConfigureConsumer<ProductCreatedConsumer>(context);
 		});
+
+		cfg.ReceiveEndpoint("product-updated-event", e =>
+			e.ConfigureConsumer<ProductUpdatedConsumer>(context));
+
+		cfg.ReceiveEndpoint("product-deleted-event", e =>
+			e.ConfigureConsumer<ProductDeletedConsumer>(context));
 	});
 });
 builder.Services.AddControllers();

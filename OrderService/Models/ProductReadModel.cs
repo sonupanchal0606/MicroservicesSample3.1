@@ -1,6 +1,7 @@
 ﻿namespace OrderService.Models
 {
-	public class Product
+	// Local Read-Only ProductReadModel Model
+	public class ProductReadModel
 	{
 		public Guid Id { get; set; }  // Same as ProductId from ProductService
 		public string Name { get; set; } = string.Empty;

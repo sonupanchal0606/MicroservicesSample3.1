@@ -42,7 +42,7 @@ namespace OrderService.Migrations
                     b.ToTable("Orders");
                 });
 
-            modelBuilder.Entity("OrderService.Models.Product", b =>
+            modelBuilder.Entity("OrderService.Models.ProductReadModel", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
